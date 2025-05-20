@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Football Predictor</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .predictor {
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background-color: #fff;
+      transition: background-color 0.3s;
+    }
+
+    .predictor.win {
+      background-color: #d4edda; /* green */
+    }
+
+    .predictor.loss {
+      background-color: #f8d7da; /* pink */
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="container">
+  <!-- Matches will be injected here -->
+</div>
+
+<button class="submit-button" onclick="submitPredictions()">Submit Predictions</button>
+
+<script>
+  const teams = {
+    "Middlesbrough": "badges/middlesbrough.svg",
+    "Swansea City": "badges/swansea.svg",
+    "Derby County": "badges/derby.svg",
+    "Portsmouth": "badges/portsmouth.svg",
+    "Cardiff City": "badges/cardiffcity.png",
+    "Preston North End": "badges/prestonnorthend.png",
+    "Sunderland": "badges/sunderland.svg",
+    "Stoke City": "badges/stokecity.png",
+    "West Brom": "badges/westbrom.svg",
+    "Watford": "badges/watford.svg",
+    "Bristol City": "badges/bristolcity.svg",
+    "Sheffield United": "badges/sheffieldunited.png",
+    "Norwich City": "badges/norwichcity.png",
+    "Coventry City": "badges/coventrycity.png",
+    "Queens Park Rangers": "badges/queensparkrangers.png",
+    "Luton Town": "badges/lutontown.png",
+    "Oxford United": "badges/oxfordunited.png",
+    "Blackburn Rovers": "badges/blackburn.svg",
+    "Hull City": "badges/hull.svg",
+    "Burnley": "badges/burnley.png",
+    "Leeds United": "badges/leeds.svg",
+    "Huddersfield Town": "badges/huddersfieldtown.png",
+    "Plymouth Argyle": "badges/plymouthargyle.png",
+    "Sheffield Wednesday": "badges/wednesday.svg"
+  };
+
+  const fixtures = [
+    { home: "Middlesbrough", away: "Swansea City" },
+    { home: "Derby County", away: "Middlesbrough" },
+    { home: "Portsmouth", away: "Middlesbrough" },
+    { home: "Sunderland", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Watford" },
+    { home: "Bristol City", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Sheffield Wednesday" },
+    { home: "Leeds United", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Blackburn Rovers" },
+    { home: "Hull City", away: "Middlesbrough" },
+  ];
+
+  const scores = Array.from({ length: fixtures.length }, () => ({ home: 0, away: 0 }));
+
+  function createMatch(index) {
+    const fixture = fixtures[index];
+    const homeName = fixture.home;
+    const awayName = fixture.away;
+    const homeBadge = teams[homeName];
+    const awayBadge = teams[awayName];
+
+    return `
+      <div class="predictor" id="match-${index}">
+        <div class="matchday-title">Matchday ${index + 1}</div>
+        <div class="team">
+          <img src="${homeBadge}" alt="${homeName} Badge">
+          <div class="team-info">
+            <div class="team-name">${homeName}</div>
+          </div>
+          <div class="score-control">
+            <button onclick="changeScore(${index}, 'home', -1)">-</button>
+            <div id="home-score-${index}" class="score">0</div>
+            <button onclick="changeScore(${index}, 'home', 1)">+</button>
+          </div>
+        </div>
+        <div class="team">
+          <img src="${awayBadge}" alt="${awayName} Badge">
+          <div class="team-info">
+            <div class="team-name">${awayName}</div>
+          </div>
+          <div class="score-control">
+            <button onclick="changeScore(${index}, 'away', -1)">-</button>
+            <div id="away-score-${index}" class="score">0</div>
+            <button onclick="changeScore(${index}, 'away', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function changeScore(index, team, delta) {
+    scores[index][team] = Math.min(9, Math.max(0, scores[index][team] + delta));
+    document.getElementById(`${team}-score-${index}`).textContent = scores[index][team];
+    updateFixtureColor(index);
+  }
+
+function updateFixtureColor(index) {
+  const fixture = fixtures[index];
+  const home = fixture.home;
+  const away = fixture.away;
+  const homeScore = scores[index].home;
+  const awayScore = scores[index].away;
+
+  const predictor = document.getElementById(`match-${index}`);
+  predictor.classList.remove("win", "loss");
+
+  if (home === "Middlesbrough" && homeScore > awayScore) predictor.classList.add("win");
+  else if (home === "Middlesbrough" && homeScore < awayScore) predictor.classList.add("loss");
+  else if (away === "Middlesbrough" && awayScore > homeScore) predictor.classList.add("win");
+  else if (away === "Middlesbrough" && awayScore < homeScore) predictor.classList.add("loss");
+}
+
+  function submitPredictions() {
+    console.log("Predictions submitted:", scores);
+    alert("Your predictions have been submitted!");
+  }
+
+  const container = document.getElementById('container');
+  for (let i = 0; i < fixtures.length; i++) {
+    if (i === 0) container.innerHTML += `<div class="month-divider">August</div>`;
+    if (i === 5) container.innerHTML += `<div class="month-divider">September</div>`;
+    if (i === 10) container.innerHTML += `<div class="month-divider">October</div>`;
+
+    container.innerHTML += createMatch(i);
+  }
+</script>
+
+</body>
+</html>
