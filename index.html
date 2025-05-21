@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Football Predictor</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     .predictor {
       border: 2px solid #ccc;
@@ -26,11 +27,56 @@
 </head>
 <body>
 
+<nav class="navbar">
+  <div class="spacer"></div> <!-- invisible spacer -->
+  <div class="nav-title">Middlesbrough 2025/26</div>
+  <div class="help-icon" onclick="toggleHelpModal()">❓</div>
+</nav>
+
+<div id="help-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="toggleHelpModal()">&times;</span>
+    <h2>How Scoring Works</h2>
+    <p>
+      For each match involving Middlesbrough this season you can score a maximum of 4 points.
+      <ul>
+        <li>Correct Home Goals: 1 point</li>
+        <li>Correct Away Goals: 1 point</li>
+        <li>Correct Result: 1 point</li>
+        <li>Correct Score: 4 points (maximum) </li>
+      </ul>
+      You can click the "Calculate Middlesbrough Points" button at the bottom of the page to view your predicted total!
+    </p>
+  </div>
+</div>
+
 <div class="container" id="container">
   <!-- Matches will be injected here -->
 </div>
 
-<button class="submit-button" onclick="submitPredictions()">Submit Predictions</button>
+
+<div class="button-container">
+<button class="report-button" onclick="calculatePoints()">Predictor Report</button>
+<button class="submit-button" onclick="submitPredictions()">Download Predictions</button>
+</div>
+
+<div id="points-result" class="points-display"></div>
+
+<div id="report-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="toggleReportModal()">&times;</span>
+    <h2>Middlesbrough Season Report</h2>
+    <p><strong>Total Points:</strong> <span id="total-points"></span></p>
+    <p><strong>Wins:</strong> <span id="wins"></span></p>
+    <p><strong>Draws:</strong> <span id="draws"></span></p>
+    <p><strong>Losses:</strong> <span id="losses"></span></p>
+    <p><strong>Goals For:</strong> <span id="goals-for"></span></p>
+    <p><strong>Goals Against:</strong> <span id="goals-against"></span></p>
+    <p><strong>Summary:</strong> <span id="summary"></span></p>
+  </div>
+</div>
+
+<footer></footer>
 
 <script>
   const teams = {
@@ -133,10 +179,65 @@ function updateFixtureColor(index) {
   else if (away === "Middlesbrough" && awayScore < homeScore) predictor.classList.add("loss");
 }
 
-  function submitPredictions() {
-    console.log("Predictions submitted:", scores);
-    alert("Your predictions have been submitted!");
-  }
+function calculatePoints() {
+  let totalPoints = 0;
+
+  fixtures.forEach((fixture, index) => {
+    const home = fixture.home;
+    const away = fixture.away;
+    const homeScore = scores[index].home;
+    const awayScore = scores[index].away;
+
+    const isBoroHome = home === "Middlesbrough";
+    const isBoroAway = away === "Middlesbrough";
+
+    if (isBoroHome || isBoroAway) {
+      let boroScore = isBoroHome ? homeScore : awayScore;
+      let oppScore = isBoroHome ? awayScore : homeScore;
+
+      if (boroScore > oppScore) {
+        totalPoints += 3;
+      } else if (boroScore === oppScore) {
+        totalPoints += 1;
+      }
+    }
+  });
+
+  document.getElementById("points-result").textContent = `Middlesbrough Total Points: ${totalPoints}`;
+}
+
+function submitPredictions() {
+  const data = [["Matchday", "Home Team", "Home Score", "Away Team", "Away Score"]];
+
+  fixtures.forEach((fixture, i) => {
+    data.push([
+      `Matchday ${i + 1}`,
+      fixture.home,
+      scores[i].home,
+      fixture.away,
+      scores[i].away
+    ]);
+  });
+
+  const ws = XLSX.utils.aoa_to_sheet(data);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Predictions");
+
+  const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+
+  const blob = new Blob([wbout], { type: "application/octet-stream" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "predictions.xlsx";
+  a.click();
+  URL.revokeObjectURL(url);
+
+  // Open a pre-filled email
+  const subject = encodeURIComponent("Football Predictions Submitted");
+  const body = encodeURIComponent("Hi,\n\nPlease find attached my football predictions.\n\n(See predictions.xlsx)");
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+}
 
   const container = document.getElementById('container');
   for (let i = 0; i < fixtures.length; i++) {
@@ -146,6 +247,62 @@ function updateFixtureColor(index) {
 
     container.innerHTML += createMatch(i);
   }
+
+function toggleHelpModal() {
+  const modal = document.getElementById("help-modal");
+  modal.style.display = modal.style.display === "block" ? "none" : "block";
+}
+
+function toggleReportModal() {
+  const modal = document.getElementById("report-modal");
+  modal.style.display = modal.style.display === "block" ? "none" : "block";
+}
+
+function calculatePoints() {
+  let wins = 0, draws = 0, losses = 0;
+  let goalsFor = 0, goalsAgainst = 0;
+
+  fixtures.forEach((match, i) => {
+    const home = match.home;
+    const away = match.away;
+    const homeScore = scores[i].home;
+    const awayScore = scores[i].away;
+
+    let isBoroHome = home === "Middlesbrough";
+    let isBoroAway = away === "Middlesbrough";
+
+    if (!isBoroHome && !isBoroAway) return;
+
+    let boroGoals = isBoroHome ? homeScore : awayScore;
+    let oppGoals = isBoroHome ? awayScore : homeScore;
+
+    goalsFor += boroGoals;
+    goalsAgainst += oppGoals;
+
+    if (boroGoals > oppGoals) wins++;
+    else if (boroGoals === oppGoals) draws++;
+    else losses++;
+  });
+
+  const totalPoints = wins * 3 + draws;
+
+  let summary = "";
+  if (totalPoints >= 80) summary = "Promotion likely";
+  else if (totalPoints >= 65) summary = "Play-off contender";
+  else if (totalPoints >= 50) summary = "Mid-table finish";
+  else summary = "Relegation battle";
+
+  // Populate modal
+  document.getElementById("total-points").textContent = totalPoints;
+  document.getElementById("wins").textContent = wins;
+  document.getElementById("draws").textContent = draws;
+  document.getElementById("losses").textContent = losses;
+  document.getElementById("goals-for").textContent = goalsFor;
+  document.getElementById("goals-against").textContent = goalsAgainst;
+  document.getElementById("summary").textContent = summary;
+
+  toggleReportModal();
+}
 </script>
 
 </body>
