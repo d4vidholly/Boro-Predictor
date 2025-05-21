@@ -16,13 +16,6 @@
       transition: background-color 0.3s;
     }
 
-    .predictor.win {
-      background-color: #d4edda; /* green */
-    }
-
-    .predictor.loss {
-      background-color: #f8d7da; /* pink */
-    }
   </style>
 </head>
 <body>
@@ -30,13 +23,13 @@
 <nav class="navbar">
   <div class="spacer"></div> <!-- invisible spacer -->
   <div class="nav-title">Middlesbrough 2025/26</div>
-  <div class="help-icon" onclick="toggleHelpModal()">❓</div>
+  <div class="help-icon" onclick="toggleHelpModal()">?</div>
 </nav>
 
 <div id="help-modal" class="modal">
   <div class="modal-content">
     <span class="close-button" onclick="toggleHelpModal()">&times;</span>
-    <h2>How Scoring Works</h2>
+    <h2 style="text-align: center;">How Scoring Works</h2>
     <p>
       For each match involving Middlesbrough this season you can score a maximum of 4 points.
       <ul>
@@ -45,7 +38,6 @@
         <li>Correct Result: 1 point</li>
         <li>Correct Score: 4 points (maximum) </li>
       </ul>
-      You can click the "Calculate Middlesbrough Points" button at the bottom of the page to view your predicted total!
     </p>
   </div>
 </div>
@@ -65,14 +57,51 @@
 <div id="report-modal" class="modal">
   <div class="modal-content">
     <span class="close-button" onclick="toggleReportModal()">&times;</span>
-    <h2>Middlesbrough Season Report</h2>
-    <p><strong>Total Points:</strong> <span id="total-points"></span></p>
-    <p><strong>Wins:</strong> <span id="wins"></span></p>
-    <p><strong>Draws:</strong> <span id="draws"></span></p>
-    <p><strong>Losses:</strong> <span id="losses"></span></p>
-    <p><strong>Goals For:</strong> <span id="goals-for"></span></p>
-    <p><strong>Goals Against:</strong> <span id="goals-against"></span></p>
-    <p><strong>Summary:</strong> <span id="summary"></span></p>
+    <h2 style="text-align: center;">Prediction Overview</h2>
+
+    <!-- Total Points centered -->
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <h3 style="margin: 0;">Total Points</h3>
+      <p id="total-points" style="font-size: 2rem; font-weight: bold; margin: 0;"></p>
+    </div>
+
+    <br>
+
+    <!-- W/D/L in one line -->
+    <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 1rem;">
+      <div>
+        <div><strong>Wins</strong></div>
+        <div id="wins"></div>
+      </div>
+      <div>
+        <div><strong>Draws</strong></div>
+        <div id="draws"></div>
+      </div>
+      <div>
+        <div><strong>Losses</strong></div>
+        <div id="losses"></div>
+      </div>
+    </div>
+
+    <br>
+
+    <!-- Goals For / Against -->
+    <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 1rem;">
+      <div>
+        <div><strong>Goals For</strong></div>
+        <div id="goals-for"></div>
+      </div>
+      <div>
+        <div><strong>Goals Against</strong></div>
+        <div id="goals-against"></div>
+      </div>
+    </div>
+
+    <!-- Summary Title and Explanation -->
+    <div style="margin-top: 1.5rem;">
+      <h3 id="summary" style="text-align: center;"></h3>
+      <p id="summary-details" style="text-align: center; font-size: 0.95rem; margin-top: 0.5rem;"></p>
+    </div>
   </div>
 </div>
 
@@ -103,6 +132,9 @@
     "Leeds United": "badges/leeds.svg",
     "Huddersfield Town": "badges/huddersfieldtown.png",
     "Plymouth Argyle": "badges/plymouthargyle.png",
+    "Leicester City": "badges/leicestercity.svg",
+    "West Brom": "badges/westbrom.svg",
+    "Wrexham": "badges/wrexham.svg",
     "Sheffield Wednesday": "badges/wednesday.svg"
   };
 
@@ -117,6 +149,42 @@
     { home: "Leeds United", away: "Middlesbrough" },
     { home: "Middlesbrough", away: "Blackburn Rovers" },
     { home: "Hull City", away: "Middlesbrough" },
+     { home: "Middlesbrough", away: "West Brom" },
+    { home: "Leicester City", away: "Middlesbrough" },
+    { home: "Wrexham", away: "Middlesbrough" },
+    { home: "Sunderland", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Watford" },
+    { home: "Bristol City", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Sheffield Wednesday" },
+    { home: "Leeds United", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Blackburn Rovers" },
+    { home: "Hull City", away: "Middlesbrough" },
+     { home: "Middlesbrough", away: "Leicester City" },
+    { home: "Derby County", away: "Middlesbrough" },
+    { home: "Portsmouth", away: "Middlesbrough" },
+    { home: "Sunderland", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Watford" },
+    { home: "Bristol City", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Sheffield Wednesday" },
+    { home: "Leeds United", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Blackburn Rovers" },
+    { home: "Hull City", away: "Middlesbrough" },
+     { home: "Middlesbrough", away: "Swansea City" },
+    { home: "Derby County", away: "Middlesbrough" },
+    { home: "Portsmouth", away: "Middlesbrough" },
+    { home: "Sunderland", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Watford" },
+    { home: "Bristol City", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Sheffield Wednesday" },
+    { home: "Leeds United", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Blackburn Rovers" },
+    { home: "Hull City", away: "Middlesbrough" },
+     { home: "Middlesbrough", away: "Swansea City" },
+    { home: "Derby County", away: "Middlesbrough" },
+    { home: "Portsmouth", away: "Middlesbrough" },
+    { home: "Sunderland", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Watford" },
+    { home: "Bristol City", away: "Middlesbrough" }
   ];
 
   const scores = Array.from({ length: fixtures.length }, () => ({ home: 0, away: 0 }));
@@ -244,18 +312,28 @@ function submitPredictions() {
     if (i === 0) container.innerHTML += `<div class="month-divider">August</div>`;
     if (i === 5) container.innerHTML += `<div class="month-divider">September</div>`;
     if (i === 10) container.innerHTML += `<div class="month-divider">October</div>`;
+    if (i === 15) container.innerHTML += `<div class="month-divider">November</div>`;
+    if (i === 20) container.innerHTML += `<div class="month-divider">December</div>`;
+    if (i === 25) container.innerHTML += `<div class="month-divider">January</div>`;
+    if (i === 30) container.innerHTML += `<div class="month-divider">February</div>`;
+    if (i === 35) container.innerHTML += `<div class="month-divider">March</div>`;
+    if (i === 40) container.innerHTML += `<div class="month-divider">April</div>`;
+    if (i === 45) container.innerHTML += `<div class="month-divider">May</div>`;
 
     container.innerHTML += createMatch(i);
   }
 
+  document.getElementById("myModal").classList.add("show"); // to show
+document.getElementById("myModal").classList.remove("show"); // to hide
+
 function toggleHelpModal() {
   const modal = document.getElementById("help-modal");
-  modal.style.display = modal.style.display === "block" ? "none" : "block";
+  modal.classList.toggle("show");
 }
 
 function toggleReportModal() {
   const modal = document.getElementById("report-modal");
-  modal.style.display = modal.style.display === "block" ? "none" : "block";
+  modal.classList.toggle("show");
 }
 
 function calculatePoints() {
@@ -286,11 +364,26 @@ function calculatePoints() {
 
   const totalPoints = wins * 3 + draws;
 
-  let summary = "";
-  if (totalPoints >= 80) summary = "Promotion likely";
-  else if (totalPoints >= 65) summary = "Play-off contender";
-  else if (totalPoints >= 50) summary = "Mid-table finish";
-  else summary = "Relegation battle";
+ let summaryText = "";
+if (totalPoints >= 100) {
+  summary = "Smashed the League";
+  summaryText = "A strong season! Middlesbrough is well on track for promotion.";
+  } else if (totalPoints >= 75) {
+  summary = "Strong Season";
+  summaryText = "A competitive season with a chance at promotion through the play-offs.";
+} else if (totalPoints >= 65) {
+  summary = "In the Play Off Mix";
+  summaryText = "A competitive season with a chance at promotion through the play-offs.";
+} else if (totalPoints >= 50) {
+  summary = "Mid-table Mediocrity";
+  summaryText = "A stable season with room for improvement.";
+} else {
+  summary = "Relegation battle";
+  summaryText = "A difficult season – the team needs to improve to avoid relegation.";
+}
+
+document.getElementById("summary").textContent = summary;
+document.getElementById("summary-details").textContent = summaryText;
 
   // Populate modal
   document.getElementById("total-points").textContent = totalPoints;

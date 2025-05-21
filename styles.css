@@ -8,8 +8,7 @@ body {
     .container {
       max-width: 400px;
       margin: 0 auto;
-    }
-    .container {
+width: 90%;
       background: #DE1B22;
       padding: 1rem;
       border-radius: 10px;
@@ -34,7 +33,7 @@ body {
     .month-divider {
       text-align: center;
       font-size: 1.1rem;
-      font-weight: bold;
+      font-weight: bolder;
       margin: 2rem 0 1rem;
       color: white;
     }
@@ -150,27 +149,41 @@ body {
 
 /* Modal styling */
 .modal {
-  display: none;
   position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
   z-index: 999;
-  left: 5%;
-  top: 5%;
-  width: 90%;
-  height: 90%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.85);
-  color: white;
-  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
   box-sizing: border-box;
-  border-radius: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.2s ease;
+  margin-left: -8px;
+}
+
+/* When active */
+.modal.show {
+  visibility: visible;
+  opacity: 1;
 }
 
 .modal-content {
-  background-color: #333;
+  background-color: #DE1B22;
+  color: white;
   padding: 20px;
   border-radius: 10px;
-  height: 100%;
+  max-width: 400px;
+  width: 90%;
+  max-height: 90vh;
   overflow-y: auto;
+  box-sizing: border-box;
+  border: 2px white solid;
 }
 
 .close-button {
@@ -209,4 +222,9 @@ footer  {
       background-color: white;
       color: #DE1B22;
       font-weight: bold;
+    }
+
+    h2  {
+      margin-top: 40px;
+      margin-bottom: 40px;
     }
