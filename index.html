@@ -7,14 +7,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
-    .predictor {
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      background-color: #fff;
-      transition: background-color 0.3s;
-    }
+
 
   </style>
 </head>
@@ -22,7 +15,7 @@
 
 <nav class="navbar">
   <div class="spacer"></div> <!-- invisible spacer -->
-  <div class="nav-title">Middlesbrough 2025/26</div>
+  <div class="nav-title">Boro Predictor 2025/26</div>
   <div class="help-icon" onclick="toggleHelpModal()">?</div>
 </nav>
 
@@ -105,7 +98,9 @@
   </div>
 </div>
 
-<footer></footer>
+<footer>
+  <p>David Holly Design</p>
+</footer>
 
 <script>
   const teams = {
@@ -205,9 +200,9 @@
             <div class="team-name">${homeName}</div>
           </div>
           <div class="score-control">
-            <button onclick="changeScore(${index}, 'home', -1)">-</button>
+            <button class="change-score" onclick="changeScore(${index}, 'home', -1)">-</button>
             <div id="home-score-${index}" class="score">0</div>
-            <button onclick="changeScore(${index}, 'home', 1)">+</button>
+            <button class="change-score" onclick="changeScore(${index}, 'home', 1)">+</button>
           </div>
         </div>
         <div class="team">
@@ -216,9 +211,9 @@
             <div class="team-name">${awayName}</div>
           </div>
           <div class="score-control">
-            <button onclick="changeScore(${index}, 'away', -1)">-</button>
+            <button class="change-score" onclick="changeScore(${index}, 'away', -1)">-</button>
             <div id="away-score-${index}" class="score">0</div>
-            <button onclick="changeScore(${index}, 'away', 1)">+</button>
+            <button class="change-score" onclick="changeScore(${index}, 'away', 1)">+</button>
           </div>
         </div>
       </div>
@@ -367,19 +362,22 @@ function calculatePoints() {
  let summaryText = "";
 if (totalPoints >= 100) {
   summary = "Smashed the League";
-  summaryText = "A strong season! Middlesbrough is well on track for promotion.";
+  summaryText = "A record breaking season with Boro marching towards the Premier League.";
   } else if (totalPoints >= 75) {
   summary = "Strong Season";
-  summaryText = "A competitive season with a chance at promotion through the play-offs.";
+  summaryText = "That's more like it. Boro start to show their potential.";
 } else if (totalPoints >= 65) {
   summary = "In the Play Off Mix";
   summaryText = "A competitive season with a chance at promotion through the play-offs.";
 } else if (totalPoints >= 50) {
   summary = "Mid-table Mediocrity";
-  summaryText = "A stable season with room for improvement.";
+  summaryText = "Boro's stay in the Championship is extended for another year.";
+} else if (totalPoints >= 40) {
+  summary = "Relegation Battle";
+  summaryText = "A disappointing season with Boro dragged into a relegation dogfight.";
 } else {
-  summary = "Relegation battle";
-  summaryText = "A difficult season – the team needs to improve to avoid relegation.";
+  summary = "Disaster";
+  summaryText = "A shocker of a season ending with relegation.";
 }
 
 document.getElementById("summary").textContent = summary;
