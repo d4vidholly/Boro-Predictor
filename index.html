@@ -6,10 +6,6 @@
   <title>Football Predictor</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <style>
-
-
-  </style>
 </head>
 <body>
 
@@ -41,6 +37,7 @@
 
 
 <div class="button-container">
+<button class="report-button" id="clearScoresBtn">Clear All Predictions</button>
 <button class="report-button" onclick="calculatePoints()">Predictor Report</button>
 <button class="submit-button" onclick="submitPredictions()">Download Predictions</button>
 </div>
@@ -56,6 +53,11 @@
     <div style="text-align: center; margin-bottom: 1.5rem;">
       <h3 style="margin: 0;">Total Points</h3>
       <p id="total-points" style="font-size: 2rem; font-weight: bold; margin: 0;"></p>
+    </div>
+
+        <div style="margin-top: 1.5rem;">
+      <h3 id="summary" style="text-align: center;"></h3>
+      <p id="summary-details" style="text-align: center; font-size: 0.95rem; margin-top: 0.5rem;"></p>
     </div>
 
     <br>
@@ -91,10 +93,12 @@
     </div>
 
     <!-- Summary Title and Explanation -->
-    <div style="margin-top: 1.5rem;">
-      <h3 id="summary" style="text-align: center;"></h3>
-      <p id="summary-details" style="text-align: center; font-size: 0.95rem; margin-top: 0.5rem;"></p>
+
+
+    <div>
+      <p>For more stats, make sure to create an account after submitting your results</p>
     </div>
+
   </div>
 </div>
 
@@ -119,13 +123,13 @@
     "Norwich City": "badges/norwichcity.png",
     "Coventry City": "badges/coventrycity.png",
     "Queens Park Rangers": "badges/queensparkrangers.png",
-    "Luton Town": "badges/lutontown.png",
-    "Oxford United": "badges/oxfordunited.png",
+    "Millwall": "badges/millwall.svg",
+    "Oxford United": "badges/oxfordunited.svg",
     "Blackburn Rovers": "badges/blackburn.svg",
     "Hull City": "badges/hull.svg",
-    "Burnley": "badges/burnley.png",
+    "Birmingham City": "badges/birmingham.svg",
     "Leeds United": "badges/leeds.svg",
-    "Huddersfield Town": "badges/huddersfieldtown.png",
+    "Southampton": "badges/southampton.svg",
     "Plymouth Argyle": "badges/plymouthargyle.png",
     "Leicester City": "badges/leicestercity.svg",
     "West Brom": "badges/westbrom.svg",
@@ -147,10 +151,10 @@
      { home: "Middlesbrough", away: "West Brom" },
     { home: "Leicester City", away: "Middlesbrough" },
     { home: "Wrexham", away: "Middlesbrough" },
-    { home: "Sunderland", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Watford" },
-    { home: "Bristol City", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Sheffield Wednesday" },
+    { home: "Birmingham City", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Millwall" },
+    { home: "Southampton", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Oxford United" },
     { home: "Leeds United", away: "Middlesbrough" },
     { home: "Middlesbrough", away: "Blackburn Rovers" },
     { home: "Hull City", away: "Middlesbrough" },
@@ -181,6 +185,21 @@
     { home: "Middlesbrough", away: "Watford" },
     { home: "Bristol City", away: "Middlesbrough" }
   ];
+
+  function saveScoresToLocal() {
+  localStorage.setItem('boroScores', JSON.stringify(scores));
+}
+
+function loadScoresFromLocal() {
+  const savedScores = localStorage.getItem('boroScores');
+  if (savedScores) {
+    const parsedScores = JSON.parse(savedScores);
+    for (let i = 0; i < parsedScores.length; i++) {
+      scores[i] = parsedScores[i];
+    }
+  }
+}
+
 
   const scores = Array.from({ length: fixtures.length }, () => ({ home: 0, away: 0 }));
 
@@ -220,11 +239,12 @@
     `;
   }
 
-  function changeScore(index, team, delta) {
-    scores[index][team] = Math.min(9, Math.max(0, scores[index][team] + delta));
-    document.getElementById(`${team}-score-${index}`).textContent = scores[index][team];
-    updateFixtureColor(index);
-  }
+function changeScore(index, team, delta) {
+  scores[index][team] = Math.min(9, Math.max(0, scores[index][team] + delta));
+  document.getElementById(`${team}-score-${index}`).textContent = scores[index][team];
+  updateFixtureColor(index);
+  saveScoresToLocal();
+}
 
 function updateFixtureColor(index) {
   const fixture = fixtures[index];
@@ -270,53 +290,93 @@ function calculatePoints() {
 }
 
 function submitPredictions() {
-  const data = [["Matchday", "Home Team", "Home Score", "Away Team", "Away Score"]];
+  const data = [
+    [
+      "Matchday",
+      "Home Team",
+      "Away Team",
+      "Home Goals Prediction",
+      "-", // Score separator
+      "Away Goals Prediction",
+      "Actual Score", // Heading only
+      "Points"        // Heading only
+    ]
+  ];
 
   fixtures.forEach((fixture, i) => {
     data.push([
       `Matchday ${i + 1}`,
       fixture.home,
-      scores[i].home,
       fixture.away,
-      scores[i].away
+      scores[i].home,
+      "-",
+      scores[i].away,
+      "", // Actual Score: leave blank
+      ""  // Points: leave blank
     ]);
   });
 
-  const ws = XLSX.utils.aoa_to_sheet(data);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Predictions");
+  const worksheet = XLSX.utils.aoa_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Predictions");
 
-  const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-
-  const blob = new Blob([wbout], { type: "application/octet-stream" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "predictions.xlsx";
-  a.click();
-  URL.revokeObjectURL(url);
-
-  // Open a pre-filled email
-  const subject = encodeURIComponent("Football Predictions Submitted");
-  const body = encodeURIComponent("Hi,\n\nPlease find attached my football predictions.\n\n(See predictions.xlsx)");
-  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  XLSX.writeFile(workbook, "boro_predictor_2025_26.xlsx");
 }
 
-  const container = document.getElementById('container');
-  for (let i = 0; i < fixtures.length; i++) {
-    if (i === 0) container.innerHTML += `<div class="month-divider">August</div>`;
-    if (i === 5) container.innerHTML += `<div class="month-divider">September</div>`;
-    if (i === 10) container.innerHTML += `<div class="month-divider">October</div>`;
-    if (i === 15) container.innerHTML += `<div class="month-divider">November</div>`;
-    if (i === 20) container.innerHTML += `<div class="month-divider">December</div>`;
-    if (i === 25) container.innerHTML += `<div class="month-divider">January</div>`;
-    if (i === 30) container.innerHTML += `<div class="month-divider">February</div>`;
-    if (i === 35) container.innerHTML += `<div class="month-divider">March</div>`;
-    if (i === 40) container.innerHTML += `<div class="month-divider">April</div>`;
-    if (i === 45) container.innerHTML += `<div class="month-divider">May</div>`;
+loadScoresFromLocal(); // 👈 Load saved scores before rendering
 
-    container.innerHTML += createMatch(i);
-  }
+const container = document.getElementById('container');
+for (let i = 0; i < fixtures.length; i++) {
+  if (i === 0) container.innerHTML += `<div class="month-divider">August</div>`;
+  if (i === 5) container.innerHTML += `<div class="month-divider">September</div>`;
+  if (i === 10) container.innerHTML += `<div class="month-divider">October</div>`;
+  if (i === 15) container.innerHTML += `<div class="month-divider">November</div>`;
+  if (i === 20) container.innerHTML += `<div class="month-divider">December</div>`;
+  if (i === 25) container.innerHTML += `<div class="month-divider">January</div>`;
+  if (i === 30) container.innerHTML += `<div class="month-divider">February</div>`;
+  if (i === 35) container.innerHTML += `<div class="month-divider">March</div>`;
+  if (i === 40) container.innerHTML += `<div class="month-divider">April</div>`;
+  if (i === 45) container.innerHTML += `<div class="month-divider">May</div>`;
+
+  container.innerHTML += createMatch(i);
+}
+
+// 👇 Populate saved scores after DOM elements are created
+for (let i = 0; i < scores.length; i++) {
+  document.getElementById(`home-score-${i}`).textContent = scores[i].home;
+  document.getElementById(`away-score-${i}`).textContent = scores[i].away;
+  updateFixtureColor(i); // update colors based on scores
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const clearBtn = document.getElementById('clearScoresBtn');
+
+  clearBtn.addEventListener('click', function () {
+    const confirmed = confirm('Are you sure you want to clear all predictions?');
+
+    if (!confirmed) return;
+
+    // Clear localStorage
+    localStorage.removeItem('boroScores');
+
+    // Reset scores array
+    for (let i = 0; i < scores.length; i++) {
+      scores[i].home = 0;
+      scores[i].away = 0;
+    }
+
+    // Update DOM
+    for (let i = 0; i < scores.length; i++) {
+      const homeEl = document.getElementById(`home-score-${i}`);
+      const awayEl = document.getElementById(`away-score-${i}`);
+      if (homeEl) homeEl.textContent = "0";
+      if (awayEl) awayEl.textContent = "0";
+      updateFixtureColor(i);
+    }
+
+    alert('All predictions have been cleared.');
+  });
+})
 
   document.getElementById("myModal").classList.add("show"); // to show
 document.getElementById("myModal").classList.remove("show"); // to hide
@@ -330,6 +390,7 @@ function toggleReportModal() {
   const modal = document.getElementById("report-modal");
   modal.classList.toggle("show");
 }
+
 
 function calculatePoints() {
   let wins = 0, draws = 0, losses = 0;
@@ -371,7 +432,7 @@ if (totalPoints >= 100) {
   summaryText = "A competitive season with a chance at promotion through the play-offs.";
 } else if (totalPoints >= 50) {
   summary = "Mid-table Mediocrity";
-  summaryText = "Boro's stay in the Championship is extended for another year.";
+  summaryText = "An underwhelming season extends Boro's stay in the Championship for another year.";
 } else if (totalPoints >= 40) {
   summary = "Relegation Battle";
   summaryText = "A disappointing season with Boro dragged into a relegation dogfight.";
@@ -379,6 +440,7 @@ if (totalPoints >= 100) {
   summary = "Disaster";
   summaryText = "A shocker of a season ending with relegation.";
 }
+
 
 document.getElementById("summary").textContent = summary;
 document.getElementById("summary-details").textContent = summaryText;
