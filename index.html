@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Football Predictor</title>
+  <meta name="description" content="Predict Middlesbrough FC's 2025/26 Championship results, track your score predictions match-by-match, and see how Boro might finish the season.">
+  <title>Boro Predictor 25/26</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
 <nav class="navbar">
-  <div class="spacer"></div> <!-- invisible spacer -->
+  <div class="spacer"></div> 
   <div class="nav-title">Boro Predictor 2025/26</div>
   <div class="help-icon" onclick="toggleHelpModal()">?</div>
 </nav>
@@ -32,7 +33,7 @@
 </div>
 
 <div class="container" id="container">
-  <!-- Matches will be injected here -->
+  <!-- Matches  -->
 </div>
 
 
@@ -49,7 +50,6 @@
     <span class="close-button" onclick="toggleReportModal()">&times;</span>
     <h2 style="text-align: center;">Prediction Overview</h2>
 
-    <!-- Total Points centered -->
     <div style="text-align: center; margin-bottom: 1.5rem;">
       <h3 style="margin: 0;">Total Points</h3>
       <p id="total-points" style="font-size: 2rem; font-weight: bold; margin: 0;"></p>
@@ -62,7 +62,6 @@
 
     <br>
 
-    <!-- W/D/L in one line -->
     <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 1rem;">
       <div>
         <div><strong>Wins</strong></div>
@@ -80,7 +79,6 @@
 
     <br>
 
-    <!-- Goals For / Against -->
     <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 1rem;">
       <div>
         <div><strong>Goals For</strong></div>
@@ -92,11 +90,11 @@
       </div>
     </div>
 
-    <!-- Summary Title and Explanation -->
+    <!-- Summary Title and Review -->
 
 
     <div>
-      <p>For more stats, make sure to create an account after submitting your results</p>
+      <!--<p>For more stats, make sure to create an account after submitting your results</p>-->
     </div>
 
   </div>
@@ -323,7 +321,7 @@ function submitPredictions() {
   XLSX.writeFile(workbook, "boro_predictor_2025_26.xlsx");
 }
 
-loadScoresFromLocal(); // 👈 Load saved scores before rendering
+loadScoresFromLocal(); // Load saved scores before rendering
 
 const container = document.getElementById('container');
 for (let i = 0; i < fixtures.length; i++) {
@@ -341,7 +339,7 @@ for (let i = 0; i < fixtures.length; i++) {
   container.innerHTML += createMatch(i);
 }
 
-// 👇 Populate saved scores after DOM elements are created
+// Populate saved scores after DOM elements are created
 for (let i = 0; i < scores.length; i++) {
   document.getElementById(`home-score-${i}`).textContent = scores[i].home;
   document.getElementById(`away-score-${i}`).textContent = scores[i].away;
@@ -378,8 +376,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 })
 
-  document.getElementById("myModal").classList.add("show"); // to show
-document.getElementById("myModal").classList.remove("show"); // to hide
+  document.getElementById("myModal").classList.add("show"); // show
+document.getElementById("myModal").classList.remove("show"); // hide
 
 function toggleHelpModal() {
   const modal = document.getElementById("help-modal");
