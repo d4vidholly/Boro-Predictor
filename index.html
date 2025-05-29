@@ -41,6 +41,7 @@
 <button class="report-button" id="clearScoresBtn">Clear All Predictions</button>
 <button class="report-button" onclick="calculatePoints()">Predictor Report</button>
 <button class="submit-button" onclick="submitPredictions()">Download Predictions</button>
+<button onclick="exportPredictionsAndRedirect()">Submit Predictions</button>
 </div>
 
 <div id="points-result" class="points-display"></div>
@@ -128,7 +129,7 @@
     "Birmingham City": "badges/birmingham.svg",
     "Leeds United": "badges/leeds.svg",
     "Southampton": "badges/southampton.svg",
-    "Plymouth Argyle": "badges/plymouthargyle.png",
+    "Norwich City": "badges/norwich.svg",
     "Leicester City": "badges/leicestercity.svg",
     "West Brom": "badges/westbrom.svg",
     "Wrexham": "badges/wrexham.svg",
@@ -157,7 +158,7 @@
     { home: "Middlesbrough", away: "Blackburn Rovers" },
     { home: "Hull City", away: "Middlesbrough" },
      { home: "Middlesbrough", away: "Leicester City" },
-    { home: "Derby County", away: "Middlesbrough" },
+    { home: "Norwich City", away: "Middlesbrough" },
     { home: "Portsmouth", away: "Middlesbrough" },
     { home: "Sunderland", away: "Middlesbrough" },
     { home: "Middlesbrough", away: "Watford" },
@@ -294,10 +295,10 @@ function submitPredictions() {
       "Home Team",
       "Away Team",
       "Home Goals Prediction",
-      "-", // Score separator
+      "-",
       "Away Goals Prediction",
-      "Actual Score", // Heading only
-      "Points"        // Heading only
+      "Actual Score",
+      "Points"
     ]
   ];
 
@@ -309,8 +310,8 @@ function submitPredictions() {
       scores[i].home,
       "-",
       scores[i].away,
-      "", // Actual Score: leave blank
-      ""  // Points: leave blank
+      "", // Leave actual score blank
+      ""  // Leave points blank
     ]);
   });
 
@@ -318,7 +319,7 @@ function submitPredictions() {
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Predictions");
 
-  XLSX.writeFile(workbook, "boro_predictor_2025_26.xlsx");
+  XLSX.writeFile(workbook, "boro_predictions_2025_26.xlsx");
 }
 
 loadScoresFromLocal(); // Load saved scores before rendering
@@ -439,6 +440,33 @@ if (totalPoints >= 100) {
   summaryText = "A shocker of a season ending with relegation.";
 }
 
+//export
+
+function exportPredictionsAndRedirect() {
+  const json = JSON.stringify(scores);
+
+  fetch("YOUR_WEB_APP_URL", {
+    method: "POST",
+    body: json,
+    headers: { "Content-Type": "application/json" }
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.id) {
+        window.location.href = `results.html?id=${data.id}`;
+      } else {
+        alert("Error saving predictions");
+      }
+    });
+}
+
+function exportPredictionsAndRedirect() {
+  submitPredictions(); // export to file
+  setTimeout(() => {
+    window.location.href = "thank-you.html"; // Change this to your actual destination
+  }, 1500); // small delay to ensure download starts
+}
+
 
 document.getElementById("summary").textContent = summary;
 document.getElementById("summary-details").textContent = summaryText;
@@ -454,6 +482,14 @@ document.getElementById("summary-details").textContent = summaryText;
 
   toggleReportModal();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("container");
+  for (let i = 0; i < fixtures.length; i++) {
+    container.innerHTML += createMatch(i);
+  }
+  loadScoresFromLocal(); // Load previous scores if any
+});
 </script>
 
 </body>
