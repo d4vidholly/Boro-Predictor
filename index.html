@@ -64,6 +64,8 @@
       <p id="summary-details" style="text-align: center; font-size: 0.95rem; margin-top: 0.5rem;"></p>
     </div>
 
+
+
     <br>
 
     <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 1rem;">
@@ -93,6 +95,11 @@
         <div id="goals-against"></div>
       </div>
     </div>
+
+        <div id="achievement-records" style="margin-top: 1.5rem; text-align: center;">
+  <h3>Records</h3>
+  <ul id="records-list" style="list-style: none; padding: 0;"></ul>
+</div>
 
     <!-- Summary Title and Review -->
 
@@ -446,6 +453,53 @@ if (totalPoints >= 100) {
   summaryText = "A shocker of a season ending with relegation.";
 }
 
+let records = [];
+
+// Example records
+if (losses === 0) {
+  records.push("Invincibles - Unbeaten season");
+}
+
+if (wins >= 29) {
+  records.push("Optimist – Most league wins in a season!");
+}
+
+if (wins <= 5) {
+  records.push("Slim Pickings - Fewest League Wins in a season.");
+}
+
+if (losses >= 27) {
+  records.push("Pessimist – Most league defeats in a season");
+}
+
+if (losses <= 4) {
+  records.push("Never Say Die - Fewest League Defeats");
+}
+
+if (goalsFor >= 123) {
+  records.push("Spoilt – Most goals scored in a season");
+}
+
+if (goalsFor <= 28) {
+  records.push("Starved – Fewest goals scored in a season");
+}
+
+if (goalsAgainst >= 92) {
+  records.push("Pourous - Most League Goals Conceded");
+}
+
+if (goalsAgainst <= 24) {
+  records.push("Watertight - Fewest League Goals Conceded");
+}
+
+if (totalPoints >= 95) {
+  records.push("Smash The League - Most Points in a Season");
+}
+
+if (totalPoints <= 28) {
+  records.push("Disasterclass - Fewest Points in a Season");
+}
+
 //export
 
 function exportPredictionsAndRedirect() {
@@ -485,6 +539,21 @@ document.getElementById("summary-details").textContent = summaryText;
   document.getElementById("goals-for").textContent = goalsFor;
   document.getElementById("goals-against").textContent = goalsAgainst;
   document.getElementById("summary").textContent = summary;
+
+  const recordsList = document.getElementById("records-list");
+recordsList.innerHTML = ""; // Clear previous list
+
+if (records.length === 0) {
+  const li = document.createElement("li");
+  li.textContent = "No special records set.";
+  recordsList.appendChild(li);
+} else {
+  records.forEach(record => {
+    const li = document.createElement("li");
+    li.textContent = record;
+    recordsList.appendChild(li);
+  });
+}
 
   toggleReportModal();
 }

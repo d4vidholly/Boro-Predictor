@@ -119,6 +119,10 @@ body {
   font-weight: bold;
 }
 
+#records-list li {
+  margin-bottom: 20px;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
@@ -187,6 +191,12 @@ body {
   overflow-y: auto;
   box-sizing: border-box;
   border: 2px white solid;
+}
+
+@media (min-width: 768px) {
+  .modal-content {
+    max-height: 70vh;
+  }
 }
 
 .close-button {
