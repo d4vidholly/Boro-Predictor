@@ -19,9 +19,11 @@
 <div id="help-modal" class="modal">
   <div class="modal-content">
     <span class="close-button" onclick="toggleHelpModal()">&times;</span>
+    <h2>Boro Predictor</h2>
+    <p>Welcome to the Boro Predictor 2025/26. Guess the score for every Middlesbrough match in th upcoming season before the first game kicks off for a chance of winning post season prizes.</p>
     <h2 style="text-align: center;">How Scoring Works</h2>
     <p>
-      For each match involving Middlesbrough this season you can score a maximum of 4 points.
+      For each match involving Middlesbrough this season you can score a maximum of 4 points from your prediction.
       <ul>
         <li>Correct Home Goals: 1 point</li>
         <li>Correct Away Goals: 1 point</li>
@@ -29,6 +31,7 @@
         <li>Correct Score: 4 points (maximum) </li>
       </ul>
     </p>
+    <p>Download your predictions and attach to your confirmation email.</p>
   </div>
 </div>
 
@@ -111,17 +114,15 @@
     "Swansea City": "badges/swansea.svg",
     "Derby County": "badges/derby.svg",
     "Portsmouth": "badges/portsmouth.svg",
-    "Cardiff City": "badges/cardiffcity.png",
-    "Preston North End": "badges/prestonnorthend.png",
-    "Sunderland": "badges/sunderland.svg",
-    "Stoke City": "badges/stokecity.png",
+    "Preston North End": "badges/preston.svg",
+    "Stoke City": "badges/stokecity.svg",
     "West Brom": "badges/westbrom.svg",
     "Watford": "badges/watford.svg",
     "Bristol City": "badges/bristolcity.svg",
-    "Sheffield United": "badges/sheffieldunited.png",
+    "Sheffield United": "badges/sheffieldutd.svg",
     "Norwich City": "badges/norwichcity.png",
-    "Coventry City": "badges/coventrycity.png",
-    "Queens Park Rangers": "badges/queensparkrangers.png",
+    "Coventry City": "badges/coventry.svg",
+    "QPR": "badges/qpr.svg",
     "Millwall": "badges/millwall.svg",
     "Oxford United": "badges/oxfordunited.svg",
     "Blackburn Rovers": "badges/blackburn.svg",
@@ -133,56 +134,60 @@
     "Leicester City": "badges/leicestercity.svg",
     "West Brom": "badges/westbrom.svg",
     "Wrexham": "badges/wrexham.svg",
-    "Sheffield Wednesday": "badges/wednesday.svg"
+    "Sheffield Wednesday": "badges/wednesday.svg",
+    "Ipswich Town": "badges/ipswich.svg",
+    "Charlton Athletic": "badges/charlton.svg"
   };
 
   const fixtures = [
     { home: "Middlesbrough", away: "Swansea City" },
-    { home: "Derby County", away: "Middlesbrough" },
-    { home: "Portsmouth", away: "Middlesbrough" },
-    { home: "Sunderland", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Watford" },
-    { home: "Bristol City", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Sheffield Wednesday" },
-    { home: "Leeds United", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Blackburn Rovers" },
-    { home: "Hull City", away: "Middlesbrough" },
-     { home: "Middlesbrough", away: "West Brom" },
-    { home: "Leicester City", away: "Middlesbrough" },
-    { home: "Wrexham", away: "Middlesbrough" },
-    { home: "Birmingham City", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Millwall" },
-    { home: "Southampton", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Oxford United" },
-    { home: "Leeds United", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Blackburn Rovers" },
-    { home: "Hull City", away: "Middlesbrough" },
-     { home: "Middlesbrough", away: "Leicester City" },
+    { home: "Millwall", away: "Middlesbrough" },
     { home: "Norwich City", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Sheffield United" },
+    { home: "Preston North End", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "West Brom" },
+    { home: "Southampton", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Stoke City" },
     { home: "Portsmouth", away: "Middlesbrough" },
-    { home: "Sunderland", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Watford" },
-    { home: "Bristol City", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Sheffield Wednesday" },
-    { home: "Leeds United", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Blackburn Rovers" },
+    { home: "Middlesbrough", away: "Ipswich Town" },
+    { home: "Sheffield Wednesday", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Wrexham" },
+    { home: "Watford", away: "Middlesbrough" },
+    { home: "Leicester City", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Birmingham City" },
+    { home: "Oxford United", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Coventry City" },
+    { home: "Middlesbrough", away: "Derby County" },
     { home: "Hull City", away: "Middlesbrough" },
-     { home: "Middlesbrough", away: "Swansea City" },
-    { home: "Derby County", away: "Middlesbrough" },
-    { home: "Portsmouth", away: "Middlesbrough" },
-    { home: "Sunderland", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Watford" },
+    { home: "Charlton Athletic", away: "Middlesbrough" },
+     { home: "Middlesbrough", away: "QPR" },
     { home: "Bristol City", away: "Middlesbrough" },
-    { home: "Middlesbrough", away: "Sheffield Wednesday" },
-    { home: "Leeds United", away: "Middlesbrough" },
     { home: "Middlesbrough", away: "Blackburn Rovers" },
-    { home: "Hull City", away: "Middlesbrough" },
-     { home: "Middlesbrough", away: "Swansea City" },
+    { home: "Middlesbrough", away: "Hull City" },
+
     { home: "Derby County", away: "Middlesbrough" },
-    { home: "Portsmouth", away: "Middlesbrough" },
-    { home: "Sunderland", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Southampton" },
+    { home: "West Brom", away: "Middlesbrough" },
+    { home: "Stoke City", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Preston North End" },
+    { home: "Middlesbrough", away: "Norwich City" },
+     { home: "Sheffield United", away: "Middlesbrough" },
+    { home: "Coventry City", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Oxford United" },
+    { home: "Middlesbrough", away: "Leicester City" },
+    { home: "Birmingham City", away: "Middlesbrough" },
+    { home: "QPR", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Charlton Athletic" },
+    { home: "Middlesbrough", away: "Bristol City" },
+    { home: "Blackburn Rovers", away: "Middlesbrough" },
+
+    { home: "Middlesbrough", away: "Millwall" },
+     { home: "Swansea City", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Portsmouth" },
+    { home: "Ipswich Town", away: "Middlesbrough" },
+    { home: "Middlesbrough", away: "Sheffield Wednesday" },
     { home: "Middlesbrough", away: "Watford" },
-    { home: "Bristol City", away: "Middlesbrough" }
+    { home: "Wrexham", away: "Middlesbrough" }
   ];
 
   function saveScoresToLocal() {
@@ -327,14 +332,14 @@ loadScoresFromLocal(); // Load saved scores before rendering
 const container = document.getElementById('container');
 for (let i = 0; i < fixtures.length; i++) {
   if (i === 0) container.innerHTML += `<div class="month-divider">August</div>`;
-  if (i === 5) container.innerHTML += `<div class="month-divider">September</div>`;
-  if (i === 10) container.innerHTML += `<div class="month-divider">October</div>`;
-  if (i === 15) container.innerHTML += `<div class="month-divider">November</div>`;
-  if (i === 20) container.innerHTML += `<div class="month-divider">December</div>`;
-  if (i === 25) container.innerHTML += `<div class="month-divider">January</div>`;
+  if (i === 4) container.innerHTML += `<div class="month-divider">September</div>`;
+  if (i === 8) container.innerHTML += `<div class="month-divider">October</div>`;
+  if (i === 12) container.innerHTML += `<div class="month-divider">November</div>`;
+  if (i === 18) container.innerHTML += `<div class="month-divider">December</div>`;
+  if (i === 24) container.innerHTML += `<div class="month-divider">January</div>`;
   if (i === 30) container.innerHTML += `<div class="month-divider">February</div>`;
   if (i === 35) container.innerHTML += `<div class="month-divider">March</div>`;
-  if (i === 40) container.innerHTML += `<div class="month-divider">April</div>`;
+  if (i === 39) container.innerHTML += `<div class="month-divider">April</div>`;
   if (i === 45) container.innerHTML += `<div class="month-divider">May</div>`;
 
   container.innerHTML += createMatch(i);
