@@ -123,6 +123,15 @@ body {
   margin-bottom: 20px;
 }
 
+.logo {
+  max-height: 100px;
+  margin: 50px;
+}
+
+.copy {
+  margin-bottom: 50px;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
