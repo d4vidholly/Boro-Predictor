@@ -7,19 +7,27 @@
   <title>Boro Predictor 25/26</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <nav class="navbar">
-  <div class="spacer"></div> 
-  <div class="nav-title">Boro Predictor 2025/26</div>
-  <div class="help-icon" onclick="toggleHelpModal()">?</div>
+  <div></div>
+
+  <div class="nav-logo">
+    <img src="BoroPredictor.svg" alt="Boro Predictor logo" class="logo">
+  </div>
+
+  <div class="help-icon" onclick="toggleHelpModal()">
+    <img src="help.svg" alt="" class="logo help-button">
+  </div>
 </nav>
 
 <div id="help-modal" class="modal">
   <div class="modal-content">
     <span class="close-button" onclick="toggleHelpModal()">&times;</span>
-    <h2>Boro Predictor</h2>
     <p>Welcome to the Boro Predictor 2025/26. Guess the score for every Middlesbrough match in th upcoming season before the first game kicks off for a chance of winning post season prizes.</p>
     <h2 style="text-align: center;">How Scoring Works</h2>
     <p>
@@ -35,15 +43,22 @@
   </div>
 </div>
 
+
 <div class="container" id="container">
   <!-- Matches  -->
 </div>
 
 
 <div class="button-container">
-<button class="report-button" id="clearScoresBtn">Clear All Predictions</button>
-<button class="report-button" onclick="calculatePoints()">Predictor Report</button>
-<button class="submit-button" onclick="submitPredictions()">Download Predictions</button>
+<button class="report-button" id="clearScoresBtn">
+  <img src="clearall.svg" class="img-button">
+</button>
+<button class="report-button" onclick="calculatePoints()">
+  <img src="PredictorReport.svg" class="img-button">
+</button>
+<button class="submit-button" onclick="submitPredictions()">
+  <img src="Download.svg" class="img-button">
+</button>
 <!-- <button onclick="exportPredictionsAndRedirect()">Submit Predictions</button> -->
 </div>
 
