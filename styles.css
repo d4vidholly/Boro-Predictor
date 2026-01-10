@@ -129,7 +129,11 @@ body {
 
 .logo {
   max-height: 50px;
+}
+
+.dhd-logo {
   margin: 50px;
+  max-height: 50px;
 }
 
 .copy {
@@ -148,7 +152,7 @@ body {
   top: 0;
   z-index: 1000;
   box-shadow: 0 4px 2px -2px rgba(0,0,0,0.02);
-  height: 100px;
+  height: 80px;
 }
 
 
@@ -229,13 +233,14 @@ footer  {
 }
 
 .report-button  {
+  max-height: 40px;
+  margin: 50px;
        display: block;
       width: 100%;
       max-width: 300px;
       padding: 0.75rem;
       background-color:#8a1014;
       color: white;
-      font-size: 1rem;
       border: 0px white solid;
       border-radius: 8px;
       cursor: pointer;
@@ -285,5 +290,5 @@ footer {
 }
 
 .img-button {
-  max-height: 50px;
+  max-height: 40px;
 }
