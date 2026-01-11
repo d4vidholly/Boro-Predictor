@@ -83,6 +83,7 @@
     <section class="paper-body">
       <!-- Left column -->
       <article class="paper-story">
+        <h3 class="article-title">2025/26 Season Review:</h3>
         <h2 id="summary" class="headline"></h2>
         <p class="article-info">By John Craigs - Chief Sports Writer</p>
         <p id="summary-details" class="story-text"></p>
@@ -97,10 +98,11 @@
       </figure>
     </section>
 
-    <!-- Footer stat (optional, still fits newspaper vibe) -->
+    <!-- Footer stat (optional, still fits newspaper vibe) 
     <footer class="paper-footer">
       <p id="total-points"></p>
     </footer>
+    -->
   </div>
 </div>
 
@@ -485,33 +487,32 @@ function calculatePoints() {
 
  let summaryText = "";
 if (totalPoints >= 100) {
-  summary = "Season Review: Brilliant Boro finally 'Smash the League'";
-  summaryText = "An historic, record breaking season closes Boro marching towards the Premier League after achieving their pre-season goals of promotion. .";
+  summary = "Brilliant Boro finally 'Smash the League'";
+  summaryText = `A disappointing season with Boro dragged into a relegation dogfight. Boro finished the season with a paltry ${totalPoints} points, leaving fans frustrated.`;
   summaryCaption = "The Riverside will host top flight football once again"
   summaryImg = "boro-paper.webp"
 } else if (totalPoints >= 75) {
-  summary = "Season Review: Strong Season for Boro";
-  summaryText = "That's more like it. Boro start to show their potential.";
+  summary = "Strong Season for Boro";
+  summaryText = `A disappointing season with Boro dragged into a relegation dogfight. Boro finished the season with a paltry ${totalPoints} points, leaving fans frustrated.`;
   summaryCaption = "Brilliant Boro finally 'Smash the League'"
   summaryImg = "boro-promotion.webp"
 } else if (totalPoints >= 65) {
-  summary = "Season Review: Boro end well and truly in the Play Off Mix";
-  summaryText = "A competitive season for Boro with a chance at promotion through the play-offs.";
+  summary = "Boro end well and truly in the Play Off Mix";
+  summaryText = `A disappointing season with Boro dragged into a relegation dogfight. Boro finished the season with a paltry ${totalPoints} points, leaving fans frustrated.`;
   summaryCaption = "Brilliant Boro finally 'Smash the League'"
   summaryImg = "boro-playoffs.webp"
 } else if (totalPoints >= 50) {
-  summary = "Season Review: Inconsistent Boro make do with Mid-table Mediocrity";
-  summaryText = "An underwhelming season, which at times promised so much, comes to a close and extends Boro's 10 year stay in the Championship for another 12 months at least.";
-  summaryCaption = "Brilliant Boro finally 'Smash the League'"
+  summary = "Inconsistent Boro make do with Mid-table Mediocrity";
+  summaryText = `A disappointing season with Boro dragged into a relegation dogfight. Boro finished the season with a paltry ${totalPoints} points, leaving fans frustrated.`;
   summaryImg = "boro-paper.webp"
 } else if (totalPoints >= 40) {
-  summary = "Season Review: A season to forget for Sorry Boro";
-  summaryText = "A disappointing season with Boro dragged into a relegation dogfight. Boro finished the season with a paultry x points leaving fans frustrated.";
+  summary = "A season to forget for Sorry Boro";
+  summaryText = `A disappointing season with Boro dragged into a relegation dogfight. Boro finished the season with a paltry ${totalPoints} points, leaving fans frustrated.`;
   summaryCaption = "A season that won't live long in Boro fans' memories"
   summaryImg = "boro-relegation.webp"
 } else {
-  summary = "Season Review: Nightmare season ends in heartbreak for Boro";
-  summaryText = "A shocker of a season finally ends with relegation for Boro and a summer of upheaval looms at the club.";
+  summary = "Nightmare season ends in heartbreak for Boro";
+  summaryText = `A disappointing season with Boro dragged into a relegation dogfight. Boro finished the season with a paltry ${totalPoints} points, leaving fans frustrated.`;
   summaryCaption = "Brilliant Boro finally 'Smash the League'"
   summaryImg = "boro-disaster.jpg"
 }
@@ -553,8 +554,9 @@ document.getElementById("summary-details").textContent = summaryText;
 document.getElementById("summary-caption").textContent = summaryCaption;
 document.getElementById("summary-img").src = summaryImg;
 
+
   // Populate modal
-  document.getElementById("total-points").textContent = totalPoints;
+  //document.getElementById("total-points").textContent = totalPoints;
   //season stats paste
   document.getElementById("summary").textContent = summary;
 
