@@ -97,10 +97,6 @@
         <figcaption class="paper-caption" id="summary-caption"></figcaption>
       </figure>
     </section>
-
-    <footer class="paper-footer">
-      <p id="total-points"></p>
-    </footer>
     
   </div>
 </div>
@@ -326,7 +322,7 @@ function updateFixtureColor(index) {
   else if (away === "Middlesbrough" && awayScore < homeScore) predictor.classList.add("loss");
 }
 
-function calculatePoints() {
+function calculateSeasonPoints() {
   let totalPoints = 0;
 
   fixtures.forEach((fixture, index) => {
@@ -442,8 +438,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 })
 
-  document.getElementById("myModal").classList.add("show"); // show
-document.getElementById("myModal").classList.remove("show"); // hide
 
 function toggleHelpModal() {
   const modal = document.getElementById("help-modal");
@@ -457,6 +451,11 @@ function toggleReportModal() {
 
 
 function calculatePoints() {
+
+  let summary = "";
+  let summaryCaption = "";
+  let summaryImg = "";
+
   let wins = 0, draws = 0, losses = 0;
   let goalsFor = 0, goalsAgainst = 0;
 
@@ -555,7 +554,7 @@ document.getElementById("summary-img").src = summaryImg;
 
 
   // Populate modal
-  document.getElementById("total-points").textContent = totalPoints;
+
   //season stats paste
   document.getElementById("summary").textContent = summary;
 
