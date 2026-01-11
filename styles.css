@@ -213,7 +213,7 @@ body {
 .modal-content {
   background-color: #ffffff;
   color: black;
-    width: 90%;
+  width: 100%;
   max-height: 75vh;
   overflow-y: auto;
   box-sizing: border-box;
@@ -228,19 +228,24 @@ body {
 .article-title {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+  color: #444;
 }
 
 /*Newspaper Display*/
 
 .masthead {
   text-align: center;
+  height: 96px;
+  margin-bottom: 36px;
 }
 
 .paper-title {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 2.1rem;
+  font-size: 2rem;
   font-weight: 800;
   margin: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
   line-height: 1.1;
 }
 
@@ -249,7 +254,14 @@ body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin: 0;
+  margin-bottom: 10px;
 }
+
+.paper-scroll {
+  background: white;
+  color: #111;
+}
+
 
 .paper-body {
   display: flex;
@@ -258,10 +270,11 @@ body {
 }
 
 .headline {
-  font-size: 1rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin-top: 0px;
   margin-bottom: 12px;
+  line-height: 1.2;
 }
 
 .story-text {
@@ -291,7 +304,7 @@ body {
 }
 
 .paper-caption {
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   margin-top: 6px;
   color: #444;
   font-style: italic;
@@ -330,10 +343,7 @@ body {
   user-select: none;
 }
 
-#summary  {
-  font-weight: bold;
-  font-size: 48px;
-}
+
 
 .paper-image  {
   max-width: 400px;
@@ -460,8 +470,8 @@ footer {
 
 @media (max-width: 767px) {
   .headline {
-    font-size: 1.15rem;
-    line-height: 1.3;
+    font-size: 2.5rem;
+    line-height: 1.2;
   }
 
     .close-button {
@@ -475,4 +485,16 @@ footer {
   border: none;
 
   }
+
+  @media (max-width: 768px) {
+  .modal-content {
+    height: 90vh;
+  }
+
+  .paper-title {
+    font-size: 1.4rem;
+  }
+
+}
+
 }
