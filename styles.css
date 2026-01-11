@@ -193,8 +193,7 @@ body {
   background-color: #ffffff;
   color: black;
   padding: 20px;
-  max-width: 800px;
-  width: 70%;
+    width: 90%;
   max-height: 75vh;
   overflow-y: auto;
   box-sizing: border-box;
@@ -212,9 +211,15 @@ body {
   font-size: 48px;
 }
 
+.paper-image  {
+  max-width: 400px;
+}
+
 @media (min-width: 768px) {
   .modal-content {
     max-height: 60vh;
+      max-width: 800px;
+  width: 70%;
   }
 }
 
