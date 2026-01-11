@@ -65,28 +65,47 @@
 <div id="points-result" class="points-display"></div>
 
 <div id="report-modal" class="modal">
-  <div class="modal-content">
-    <span class="close-button" onclick="toggleReportModal()">&times;</span>
-    <h2 style="text-align: center;">The Boro Gazette</h2>
-    <p style="text-align: center;">May 2026</p>
+  <div class="modal-content newspaper">
+    <button class="close-button" onclick="toggleReportModal()">&times;</button>
 
-           <div>
-      <h3 id="summary" style="margin-top: 1.5rem;"></h3>
-      <p id="summary-details" style="font-size: 0.95rem; margin-top: 0.5rem;"></p>
-    </div>
+    <!-- Masthead -->
+    <header class="masthead">
+      <h1 class="paper-title">The Boro Gazette</h1>
+      <p class="paper-date">May 2026</p>
+    </header>
 
-    <div>
-    <img src="boro-paper.webp" class="paper-img">
+    <!-- Main content -->
+    <section class="paper-body">
+      <!-- Left column -->
+      <article class="paper-story">
+        <h2 id="summary" class="headline"></h2>
+        <p class="paper-date">By John Craigs - Chief Sports Writer</p>
+        <p id="summary-details" class="story-text"></p>
+      </article>
+
+      <!-- Right column -->
+      <figure class="paper-figure">
+        <div class="paper-image-frame">
+  <img src="boro-paper.webp" alt="">
+</div>
+        <figcaption class="paper-caption">
+          Riverside roars as the season unfolds.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- Footer stat (optional, still fits newspaper vibe) -->
+    <footer class="paper-footer">
+      <p id="total-points"></p>
+    </footer>
   </div>
-
-    <div style="text-align: center; margin-bottom: 1.5rem;">
-      <h3 style="margin: 0;">Total Points</h3>
-      <p id="total-points" style="font-size: 2rem; font-weight: bold; margin: 0;"></p>
-    </div>
+</div>
 
 
 
     <br>
+
+    <!--Season Stats
 
     <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 1rem;">
       <div>
@@ -116,11 +135,16 @@
       </div>
     </div>
 
-    
+    -->
+
+
+    <!-- Season Records
         <div id="achievement-records" style="margin-top: 1.5rem; text-align: center;">
   <h3>Records</h3>
   <ul id="records-list" style="list-style: none; padding: 0;"></ul>
 </div>
+
+-->
 
 
 
@@ -470,59 +494,16 @@ if (totalPoints >= 100) {
   summary = "Mid-table Mediocrity";
   summaryText = "An underwhelming season extends Boro's stay in the Championship for another year.";
 } else if (totalPoints >= 40) {
-  summary = "Season Review: Not Good Enough";
+  summary = "Season Review: Sorry Boro disappoint fans";
   summaryText = "A disappointing season with Boro dragged into a relegation dogfight.";
 } else {
   summary = "Disaster";
   summaryText = "A shocker of a season ending with relegation.";
 }
 
-let records = [];
+//records 1 paste
 
-// Example records
-if (losses === 0) {
-  records.push("Invincibles - Unbeaten season");
-}
 
-if (wins >= 29) {
-  records.push("Optimist – Most league wins in a season!");
-}
-
-if (wins <= 5) {
-  records.push("Slim Pickings - Fewest League Wins in a season.");
-}
-
-if (losses >= 27) {
-  records.push("Pessimist – Most league defeats in a season");
-}
-
-if (losses <= 4) {
-  records.push("Never Say Die - Fewest League Defeats");
-}
-
-if (goalsFor >= 123) {
-  records.push("Spoilt – Most goals scored in a season");
-}
-
-if (goalsFor <= 28) {
-  records.push("Starved – Fewest goals scored in a season");
-}
-
-if (goalsAgainst >= 92) {
-  records.push("Pourous - Most League Goals Conceded");
-}
-
-if (goalsAgainst <= 24) {
-  records.push("Watertight - Fewest League Goals Conceded");
-}
-
-if (totalPoints >= 95) {
-  records.push("Smash The League - Most Points in a Season");
-}
-
-if (totalPoints <= 28) {
-  records.push("Disasterclass - Fewest Points in a Season");
-}
 
 //export
 
@@ -557,27 +538,10 @@ document.getElementById("summary-details").textContent = summaryText;
 
   // Populate modal
   document.getElementById("total-points").textContent = totalPoints;
-  document.getElementById("wins").textContent = wins;
-  document.getElementById("draws").textContent = draws;
-  document.getElementById("losses").textContent = losses;
-  document.getElementById("goals-for").textContent = goalsFor;
-  document.getElementById("goals-against").textContent = goalsAgainst;
+  //season stats paste
   document.getElementById("summary").textContent = summary;
 
-  const recordsList = document.getElementById("records-list");
-recordsList.innerHTML = ""; // Clear previous list
-
-if (records.length === 0) {
-  const li = document.createElement("li");
-  li.textContent = "No special records set.";
-  recordsList.appendChild(li);
-} else {
-  records.forEach(record => {
-    const li = document.createElement("li");
-    li.textContent = record;
-    recordsList.appendChild(li);
-  });
-}
+//records 2 paste
 
   toggleReportModal();
 }
