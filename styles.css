@@ -223,6 +223,10 @@ body {
 
 }
 
+.paper-footer {
+  display: none;
+}
+
 .article-title {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
@@ -252,7 +256,7 @@ body {
 .paper-body {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 8px;
 }
 
 .headline {
