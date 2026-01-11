@@ -186,7 +186,6 @@ body {
 .modal-content {
   background-color: #ffffff;
   color: black;
-  padding: 20px;
     width: 90%;
   max-height: 75vh;
   overflow-y: auto;
@@ -213,7 +212,7 @@ body {
   font-size: 0.85rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-top: 6px;
+  margin: 0;
 }
 
 .paper-body {
@@ -226,22 +225,33 @@ body {
   font-size: 1.5rem;
   font-weight: bold;
   margin-top: 0px;
+  margin-left: 16px;
   margin-bottom: 12px;
 }
 
 .story-text {
   font-size: 1rem;
   line-height: 1.6;
+  margin-left: 16px;
+  font-weight: bolder;
 }
+
+.article-info {
+  margin-left: 16px;
+    font-size: 0.8rem;
+}
+
 
 .paper-figure {
   margin: 0;
+  margin-right: 16px;
 }
 
 .paper-img {
   width: 100%;
   height: auto;
   display: block;
+  margin-right: 16px;
 }
 
 .paper-caption {
@@ -264,7 +274,7 @@ body {
 }
 
 .paper-banner {
-  background-color: #0a3d91; /* Boro blue */
+  background-color: #17469D; /* Boro blue */
   color: #ffffff;
   text-align: center;
   padding: 16px 16px 14px;
@@ -320,6 +330,10 @@ body {
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
+  border-radius: 0;
+  background-color: #17469D;
+  color: white;
+  border: none;
 }
 
 
@@ -382,8 +396,6 @@ footer  {
   color: black;
   font-weight: bold;
 }
-
-
 
 footer {
   text-align: center;
