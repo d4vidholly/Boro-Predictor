@@ -106,16 +106,7 @@ body {
   background-color: #f8d7da;
 }
 
-.points-button {
-  margin-top: 20px;
-  padding: 10px 15px;
-  font-size: 16px;
-  background-color: #222;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
+
 
 .points-display {
   margin-top: 10px;
@@ -164,6 +155,42 @@ body {
 }
 
 /* Modal styling */
+
+.help-modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.help-modal.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.help-modal-content {
+  background-color: #ffffff;
+  padding: 16px;
+  color: black;
+    width: 90%;
+  max-height: 75vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  max-width: 800px;
+  margin-top: 150px;
+
+}
+
+
+
+
 .modal {
   position: fixed;
   inset: 0;
@@ -191,6 +218,7 @@ body {
   overflow-y: auto;
   box-sizing: border-box;
   max-width: 800px;
+  margin-top: 150px;
 
 }
 
@@ -222,7 +250,7 @@ body {
 }
 
 .headline {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
   margin-top: 0px;
   margin-left: 16px;
@@ -332,13 +360,15 @@ body {
 
 .close-button {
   float: right;
-  font-size: 28px;
+  font-size: 48px;
   font-weight: bold;
   cursor: pointer;
   border-radius: 0;
   background-color: #17469D;
   color: white;
   border: none;
+  margin-right: 16px;
+  margin-top: 16px;
 }
 
 
@@ -346,31 +376,33 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center; /* centers horizontally */
-  margin-top: 40px; /* optional spacing from top */
+  margin-top: 40px; /* spacing from top */
+  gap: 1rem; /* better spacing than multiple margins */
 }
 
 footer  {
   height: 50px;
 }
 
-.report-button  {
-  max-height: 40px;
-  margin: 50px;
-       display: block;
-      width: 100%;
-      max-width: 300px;
-      padding: 0.75rem;
-      background-color:#8a1014;
-      color: white;
-      border: 0px white solid;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 2rem;
+.report-button {
+  display: flex;             /* use flex so image centers nicely */
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  height: 50px;             /* fixed height for consistency */
+  padding: 0;
+  background-color: #8a1014;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
-    .report-button:hover {
-    transform: scale(1.1);
-    }
+   .report-button:hover {
+  transform: scale(1.05);
+}
 
        .help-button:hover {
     transform: scale(1.1);
@@ -409,7 +441,8 @@ footer {
 }
 
 .img-button {
-  max-height: 40px;
+  max-height: 24px; /* smaller than button height so it fits nicely */
+  max-width: 80%;   /* prevents oversize if image is wide */
 }
 
 .logo {

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
 
@@ -25,8 +26,8 @@
   </div>
 </nav>
 
-<div id="help-modal" class="modal">
-  <div class="modal-content">
+<div id="help-modal" class="help-modal">
+  <div class="help-modal-content">
     <span class="close-button" onclick="toggleHelpModal()">&times;</span>
     <p>Welcome to the Boro Predictor 2025/26. Guess the score for every Middlesbrough match in the 2025/26 EFL season before the first game kicks and compete to win post season prizes.</p>
     <h2 style="text-align: center;">How Scoring Works</h2>
@@ -50,16 +51,18 @@
 
 
 <div class="button-container">
-<button class="report-button" id="clearScoresBtn">
-  <img src="clearall.svg" class="img-button">
-</button>
-<button class="report-button" onclick="calculatePoints()">
-  <img src="PredictorReport.svg" class="img-button">
-</button>
-<button class="report-button" onclick="submitPredictions()">
-  <img src="Download.svg" class="img-button">
-</button>
+  <button class="report-button" id="clearScoresBtn">
+    <img src="clearall.svg" class="img-button" alt="Clear all">
+  </button>
+  <button class="report-button" onclick="calculatePoints()">
+    <img src="PredictorReport.svg" class="img-button" alt="Report">
+  </button>
+  <button class="report-button" onclick="submitPredictions()">
+    <img src="Download.svg" class="img-button" alt="Download">
+  </button>
+
 <!-- <button onclick="exportPredictionsAndRedirect()">Submit Predictions</button> -->
+
 </div>
 
 <div id="points-result" class="points-display"></div>
@@ -88,7 +91,7 @@
       <!-- Right column -->
       <figure class="paper-figure">
         <div class="paper-image-frame">
-  <img src="boro-paper.webp" alt="">
+  <img id="summary-img" src="boro-paper.webp" alt="">
 </div>
         <figcaption class="paper-caption" id="summary-caption"></figcaption>
       </figure>
@@ -485,26 +488,32 @@ if (totalPoints >= 100) {
   summary = "Season Review: Brilliant Boro finally 'Smash the League'";
   summaryText = "An historic, record breaking season closes Boro marching towards the Premier League after achieving their pre-season goals of promotion. .";
   summaryCaption = "The Riverside will host top flight football once again"
+  summaryImg = "boro-paper.webp"
 } else if (totalPoints >= 75) {
   summary = "Season Review: Strong Season for Boro";
   summaryText = "That's more like it. Boro start to show their potential.";
-  summaryCaption = "Season Review: Brilliant Boro finally 'Smash the League'"
+  summaryCaption = "Brilliant Boro finally 'Smash the League'"
+  summaryImg = "boro-promotion.webp"
 } else if (totalPoints >= 65) {
   summary = "Season Review: Boro end well and truly in the Play Off Mix";
   summaryText = "A competitive season for Boro with a chance at promotion through the play-offs.";
-  summaryCaption = "Season Review: Brilliant Boro finally 'Smash the League'"
+  summaryCaption = "Brilliant Boro finally 'Smash the League'"
+  summaryImg = "boro-playoffs.webp"
 } else if (totalPoints >= 50) {
   summary = "Season Review: Inconsistent Boro make do with Mid-table Mediocrity";
   summaryText = "An underwhelming season, which at times promised so much, comes to a close and extends Boro's 10 year stay in the Championship for another 12 months at least.";
-  summaryCaption = "Season Review: Brilliant Boro finally 'Smash the League'"
+  summaryCaption = "Brilliant Boro finally 'Smash the League'"
+  summaryImg = "boro-paper.webp"
 } else if (totalPoints >= 40) {
-  summary = "Season Review: Sorry Boro disappoint fans";
+  summary = "Season Review: A season to forget for Sorry Boro";
   summaryText = "A disappointing season with Boro dragged into a relegation dogfight. Boro finished the season with a paultry x points leaving fans frustrated.";
-  summaryCaption = "Season Review: Brilliant Boro finally 'Smash the League'"
+  summaryCaption = "A season that won't live long in Boro fans' memories"
+  summaryImg = "boro-relegation.webp"
 } else {
   summary = "Season Review: Nightmare season ends in heartbreak for Boro";
   summaryText = "A shocker of a season finally ends with relegation for Boro and a summer of upheaval looms at the club.";
-  summaryCaption = "Season Review: Brilliant Boro finally 'Smash the League'"
+  summaryCaption = "Brilliant Boro finally 'Smash the League'"
+  summaryImg = "boro-disaster.jpg"
 }
 
 //records 1 paste
@@ -542,6 +551,7 @@ function exportPredictionsAndRedirect() {
 document.getElementById("summary").textContent = summary;
 document.getElementById("summary-details").textContent = summaryText;
 document.getElementById("summary-caption").textContent = summaryCaption;
+document.getElementById("summary-img").src = summaryImg;
 
   // Populate modal
   document.getElementById("total-points").textContent = totalPoints;
