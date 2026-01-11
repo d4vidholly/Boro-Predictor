@@ -226,6 +226,7 @@ body {
   font-weight: bold;
   margin-top: 0px;
   margin-left: 16px;
+  margin-right: 16px;
   margin-bottom: 12px;
 }
 
@@ -233,11 +234,13 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   margin-left: 16px;
+  margin-right: 16px;
   font-weight: bolder;
 }
 
 .article-info {
   margin-left: 16px;
+  margin-right: 16px;
     font-size: 0.8rem;
 }
 
@@ -245,12 +248,14 @@ body {
 .paper-figure {
   margin: 0;
   margin-right: 16px;
+  margin-right: 16px;
 }
 
 .paper-img {
   width: 100%;
   height: auto;
   display: block;
+  margin-left: 16px;
   margin-right: 16px;
 }
 
@@ -418,8 +423,14 @@ footer {
   }
 
     .close-button {
-    top: 8px;
-    right: 12px;
-    font-size: 22px;
+     float: right;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0;
+  background-color: #17469D;
+  color: white;
+  border: none;
+
   }
 }
