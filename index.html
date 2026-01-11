@@ -51,7 +51,7 @@
 
 
 <div class="button-container">
-  <button class="report-button" id="clearScoresBtn">
+  <button id="clearScoresBtn" class="report-button">
     <img src="clearall.svg" class="img-button" alt="Clear all">
   </button>
   <button class="report-button" onclick="calculatePoints()">
@@ -222,7 +222,6 @@
     { home: "Bristol City", away: "Middlesbrough", date: "30/8/25" },
     { home: "Middlesbrough", away: "Blackburn Rovers", date: "30/8/25" },
     { home: "Middlesbrough", away: "Hull City", date: "30/8/25" },
-
     { home: "Derby County", away: "Middlesbrough", date: "30/8/25" },
     { home: "Middlesbrough", away: "Southampton", date: "30/8/25" },
     { home: "West Brom", away: "Middlesbrough", date: "30/8/25" },
@@ -238,7 +237,6 @@
     { home: "Middlesbrough", away: "Charlton Athletic", date: "30/8/25" },
     { home: "Middlesbrough", away: "Bristol City", date: "30/8/25" },
     { home: "Blackburn Rovers", away: "Middlesbrough", date: "30/8/25" },
-
     { home: "Middlesbrough", away: "Millwall", date: "30/8/25" },
      { home: "Swansea City", away: "Middlesbrough", date: "30/8/25" },
     { home: "Middlesbrough", away: "Portsmouth", date: "30/8/25" },
@@ -386,22 +384,38 @@ function submitPredictions() {
   XLSX.writeFile(workbook, "boro_predictions_2025_26.xlsx");
 }
 
-loadScoresFromLocal(); // Load saved scores before rendering
+document.addEventListener('DOMContentLoaded', () => {
+  loadScoresFromLocal();
+  renderFixtures();
+    setupClearButton(); // ✅ ADD THIS LINE
 
-const container = document.getElementById('container');
-for (let i = 0; i < fixtures.length; i++) {
-  if (i === 0) container.innerHTML += `<div class="month-divider">August</div>`;
-  if (i === 4) container.innerHTML += `<div class="month-divider">September</div>`;
-  if (i === 8) container.innerHTML += `<div class="month-divider">October</div>`;
-  if (i === 12) container.innerHTML += `<div class="month-divider">November</div>`;
-  if (i === 18) container.innerHTML += `<div class="month-divider">December</div>`;
-  if (i === 24) container.innerHTML += `<div class="month-divider">January</div>`;
-  if (i === 30) container.innerHTML += `<div class="month-divider">February</div>`;
-  if (i === 35) container.innerHTML += `<div class="month-divider">March</div>`;
-  if (i === 39) container.innerHTML += `<div class="month-divider">April</div>`;
-  if (i === 45) container.innerHTML += `<div class="month-divider">May</div>`;
+  // Restore scores AFTER rendering
+  for (let i = 0; i < scores.length; i++) {
+    document.getElementById(`home-score-${i}`).textContent = scores[i].home;
+    document.getElementById(`away-score-${i}`).textContent = scores[i].away;
+    updateFixtureColor(i);
+  }
+});
 
-  container.innerHTML += createMatch(i);
+
+function renderFixtures() {
+  const container = document.getElementById('container');
+  container.innerHTML = ""; // 🔑 PREVENT DUPLICATION
+
+  for (let i = 0; i < fixtures.length; i++) {
+    if (i === 0) container.innerHTML += `<div class="month-divider">August</div>`;
+    if (i === 4) container.innerHTML += `<div class="month-divider">September</div>`;
+    if (i === 8) container.innerHTML += `<div class="month-divider">October</div>`;
+    if (i === 12) container.innerHTML += `<div class="month-divider">November</div>`;
+    if (i === 18) container.innerHTML += `<div class="month-divider">December</div>`;
+    if (i === 24) container.innerHTML += `<div class="month-divider">January</div>`;
+    if (i === 30) container.innerHTML += `<div class="month-divider">February</div>`;
+    if (i === 35) container.innerHTML += `<div class="month-divider">March</div>`;
+    if (i === 39) container.innerHTML += `<div class="month-divider">April</div>`;
+    if (i === 45) container.innerHTML += `<div class="month-divider">May</div>`;
+
+    container.innerHTML += createMatch(i);
+  }
 }
 
 // Populate saved scores after DOM elements are created
@@ -411,24 +425,38 @@ for (let i = 0; i < scores.length; i++) {
   updateFixtureColor(i); // update colors based on scores
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
+  loadScoresFromLocal();
+  renderFixtures();
+
+  for (let i = 0; i < scores.length; i++) {
+    document.getElementById(`home-score-${i}`).textContent = scores[i].home;
+    document.getElementById(`away-score-${i}`).textContent = scores[i].away;
+    updateFixtureColor(i);
+  }
+
+  setupClearButton(); // 🔑 THIS WAS MISSING
+});
+
+
+function setupClearButton() {
   const clearBtn = document.getElementById('clearScoresBtn');
+  if (!clearBtn) return;
 
-  clearBtn.addEventListener('click', function () {
+  clearBtn.onclick = () => {
     const confirmed = confirm('Are you sure you want to clear all predictions?');
-
     if (!confirmed) return;
 
-    // Clear localStorage
+    // Clear storage
     localStorage.removeItem('boroScores');
 
-    // Reset scores array
+    // Reset scores
     for (let i = 0; i < scores.length; i++) {
       scores[i].home = 0;
       scores[i].away = 0;
     }
 
-    // Update DOM
+    // Update UI
     for (let i = 0; i < scores.length; i++) {
       const homeEl = document.getElementById(`home-score-${i}`);
       const awayEl = document.getElementById(`away-score-${i}`);
@@ -438,8 +466,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     alert('All predictions have been cleared.');
-  });
-})
+  };
+}
+
 
 
 function toggleHelpModal() {
@@ -573,6 +602,46 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   loadScoresFromLocal(); // Load previous scores if any
 });
+
+function setupClearButton() {
+  const clearBtn = document.getElementById('clearScoresBtn');
+  if (!clearBtn) {
+    console.warn('Clear button not found');
+    return;
+  }
+
+  clearBtn.addEventListener('click', (e) => {
+    e.preventDefault(); // 🔑 stops form submission
+
+    if (!confirm('Are you sure you want to clear all predictions?')) return;
+
+    // Clear localStorage
+    localStorage.removeItem('boroScores');
+
+    // Reset scores array
+    for (let i = 0; i < scores.length; i++) {
+      scores[i].home = 0;
+      scores[i].away = 0;
+    }
+
+    // Update UI
+    for (let i = 0; i < scores.length; i++) {
+      const home = document.getElementById(`home-score-${i}`);
+      const away = document.getElementById(`away-score-${i}`);
+
+      if (home) home.textContent = '0';
+      if (away) away.textContent = '0';
+
+      if (typeof updateFixtureColor === 'function') {
+        updateFixtureColor(i);
+      }
+    }
+
+    alert('All predictions cleared');
+  });
+}
+
+
 </script>
 
 </body>
