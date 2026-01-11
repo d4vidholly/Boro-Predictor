@@ -67,16 +67,21 @@
 <div id="report-modal" class="modal">
   <div class="modal-content">
     <span class="close-button" onclick="toggleReportModal()">&times;</span>
-    <h2 style="text-align: center;">Prediction Overview</h2>
+    <h2 style="text-align: center;">The Boro Gazette</h2>
+    <p style="text-align: center;">May 2026</p>
+
+           <div>
+      <h3 id="summary" style="margin-top: 1.5rem;"></h3>
+      <p id="summary-details" style="font-size: 0.95rem; margin-top: 0.5rem;"></p>
+    </div>
+
+    <div>
+    <img src="boro-paper.webp">
+  </div>
 
     <div style="text-align: center; margin-bottom: 1.5rem;">
       <h3 style="margin: 0;">Total Points</h3>
       <p id="total-points" style="font-size: 2rem; font-weight: bold; margin: 0;"></p>
-    </div>
-
-        <div style="margin-top: 1.5rem;">
-      <h3 id="summary" style="text-align: center;"></h3>
-      <p id="summary-details" style="text-align: center; font-size: 0.95rem; margin-top: 0.5rem;"></p>
     </div>
 
 
@@ -111,10 +116,13 @@
       </div>
     </div>
 
+    
         <div id="achievement-records" style="margin-top: 1.5rem; text-align: center;">
   <h3>Records</h3>
   <ul id="records-list" style="list-style: none; padding: 0;"></ul>
 </div>
+
+
 
     <!-- Summary Title and Review -->
 
@@ -462,7 +470,7 @@ if (totalPoints >= 100) {
   summary = "Mid-table Mediocrity";
   summaryText = "An underwhelming season extends Boro's stay in the Championship for another year.";
 } else if (totalPoints >= 40) {
-  summary = "Relegation Battle";
+  summary = "Season Review: Not Good Enough";
   summaryText = "A disappointing season with Boro dragged into a relegation dogfight.";
 } else {
   summary = "Disaster";

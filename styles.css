@@ -193,19 +193,23 @@ body {
   background-color: #ffffff;
   color: black;
   padding: 20px;
-  border-radius: 10px;
   max-width: 800px;
-  width: 90%;
+  width: 70%;
   max-height: 75vh;
   overflow-y: auto;
   box-sizing: border-box;
-  border: 13px #8a1014 solid;
+
 }
 
 .change-score {
     touch-action: manipulation;
   -webkit-user-select: none;
   user-select: none;
+}
+
+#summary  {
+  font-weight: bold;
+  font-size: 48px;
 }
 
 @media (min-width: 768px) {
