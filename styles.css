@@ -45,6 +45,8 @@ body {
       align-items: center;
       justify-content: space-between;
       margin-bottom: 1rem;
+      font-style: italic;
+      font-weight: 900;
     }
     .team img {
       width: 40px;
@@ -72,12 +74,14 @@ body {
       border-radius: 100%;
       border: none;
       font-weight: 700;
+      font-style: normal !important;
     }
     .score {
       font-size: 1.5rem;
       width: 22px;
       text-align: center;
       font-weight: 700;
+      font-style: normal;
     }
     .submit-button {
       display: block;
@@ -119,12 +123,16 @@ body {
 }
 
 .logo {
-  max-height: 40px;
+  max-height: 30px;
 }
 
 .dhd-logo {
   margin: 50px;
   max-height: 50px;
+}
+
+.help-button  {
+  max-height: 20px;
 }
 
 .copy {
@@ -374,6 +382,19 @@ body {
     align-items: flex-start;
     padding-top: 72px; /* adjust to your nav height */
   }
+
+  .logo {
+  max-height: 40px;
+}
+
+.dhd-logo {
+  margin: 50px;
+  max-height: 50px;
+}
+
+.help-button  {
+  max-height: 30px;
+}
 }
 
 
@@ -464,9 +485,6 @@ footer {
   max-width: 80%;   /* prevents oversize if image is wide */
 }
 
-.logo {
-  max-height: 50px;
-}
 
 @media (max-width: 767px) {
   .headline {
